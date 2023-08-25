@@ -1,9 +1,12 @@
 import React from 'react';
 
 const demo = () => {
+    const handleDate = (e) => {
+        console.log(e.target.value);
+    }
     return (
         <div>
-            asdfsdf
+            <input type="date" placeholder='data' onChange={handleDate} />
         </div>
     );
 };

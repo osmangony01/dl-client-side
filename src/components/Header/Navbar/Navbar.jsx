@@ -1,4 +1,4 @@
-import React from 'react';
+
 import NavLogo from './NavLogo';
 import SearchMenu from './SearchMenu';
 import UserMenu from './UserMenu';
