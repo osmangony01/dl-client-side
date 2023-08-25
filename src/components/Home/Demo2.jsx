@@ -4,6 +4,8 @@ import axiosInstance from '../../hooks/axiosInstance';
 import filterLogo from '../../../public/images/filterLogo.svg';
 import moment from 'moment/moment';
 import FilterData from './FilterData/FilterData';
+import { status } from 'init';
+import D3 from './D3';
 
 const Demo2 = () => {
 
@@ -53,6 +55,11 @@ const Demo2 = () => {
         }
     }
 
+    const [filterModal, setFilterModal] = useState(false);
+    const handleFilterModal = (status) => {
+        setFilterModal(status);
+    }
+
     //console.log(allReserveData);
     //console.log(selectCategory);
     //console.log(defaultSelected);
@@ -72,14 +79,17 @@ const Demo2 = () => {
                         })}
                     </div>
                     <div>
-                        <span className='flex items-center justify-center px-4 py-3 border rounded-lg shadow-sm transition cursor-pointer' onClick={() => window.my_modal_3.showModal()}>
+                        <span className='flex items-center justify-center px-4 py-3 border rounded-lg shadow-sm transition cursor-pointer' onClick={()=>{handleFilterModal(true)}}>
                             <img src={filterLogo} alt="filter-logo" className='h-[15px] w-[15px]' />
-                            <span className='text-sm font-semibold text-[#3f3e3e] pl-2'>Filter</span>
+                            <span className='text-sm font-semibold text-[#3f3e3e] pl-2' >Filter</span>
                         </span>
 
                         {/* You can open the modal using ID.showModal() method */}
                         {/* <button className="btn" onClick={() => window.my_modal_3.showModal()}>open modal</button> */}
-                        <FilterData></FilterData>
+                        {/* <FilterData></FilterData> */}
+                        <D3 status={filterModal} handleFilterModal={handleFilterModal}></D3>
+
+
                         
                     </div>
                 </div>
