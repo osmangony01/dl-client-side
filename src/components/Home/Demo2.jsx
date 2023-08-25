@@ -3,32 +3,30 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '../../hooks/axiosInstance';
 import filterLogo from '../../../public/images/filterLogo.svg';
 import moment from 'moment/moment';
+import FilterData from './FilterData/FilterData';
 
 const Demo2 = () => {
 
     const [categories, setCategories] = useState([]);
-
     const [allReserveData, setAllReserveData] = useState([]);
+    //const [filterByCategory, setFilterByCategory] = useState([]);
+    const [selectCategory, setSelectCategory] = useState();
 
-    const [filterByCategory, setFilterByCategory] = useState([]);
-
+    // fetch all category menu data
     const fetchCategoryData = async () => {
         const res = await axiosInstance.get('/api/category')
         const data = res.data;
-
         if (data) {
             setCategories(data);
-
         }
     };
 
+    // fetch all reserve data 
     const fetchReserveData = async () => {
         const res = await axiosInstance.get('/api/getAllCategoryData')
         const data = res.data;
-
         if (data) {
             setAllReserveData(data);
-
         }
     }
 
@@ -37,24 +35,29 @@ const Demo2 = () => {
         fetchReserveData();
     }, []);
 
-    const [selectCategory, setSelectCategory] = useState();
-    
-    const handleSelectCategory = async(label) => {
+    // get all data based on selected category
+    const handleSelectCategory = async (label) => {
         setSelectCategory(label)
-
         const searchQuery = { "featureCategory": label };
-        const response = await axiosInstance.patch("/update-status", updateStatus);
-        //console.log(response.data);
-        const data = response.data;
+        // const response = await axiosInstance.get("/api/specificCategoryData", searchQuery);
+        //const data = response.data;
+        try {
+            const response = await axiosInstance.get("/api/specificCategoryData", {
+                params: searchQuery
+            });
+            const data = response.data;
+            //console.log(response.data);
+            setAllReserveData(data);
+        } catch (error) {
+            console.error('Error fetching specific category data:', error);
+        }
     }
 
-    console.log(allReserveData);
-    console.log(selectCategory);
-
+    //console.log(allReserveData);
+    //console.log(selectCategory);
     //console.log(defaultSelected);
-
     // const [categories] = useAllCategory();
-    console.log(categories);
+    //console.log(categories);
 
     return (
         <div className='relative'>
@@ -76,17 +79,8 @@ const Demo2 = () => {
 
                         {/* You can open the modal using ID.showModal() method */}
                         {/* <button className="btn" onClick={() => window.my_modal_3.showModal()}>open modal</button> */}
-                        <dialog id="my_modal_3" className="modal">
-                            <form method="dialog" className="modal-box">
-                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                                <h3 className="font-bold text-lg">Hello!</h3>
-                                <p className="py-4">Press ESC key or click on ✕ button to close</p>
-                                <div className="modal-action">
-                                    {/* if there is a button in form, it will close the modal */}
-                                    <button className="btn">Close</button>
-                                </div>
-                            </form>
-                        </dialog>
+                        <FilterData></FilterData>
+                        
                     </div>
                 </div>
             </div>
