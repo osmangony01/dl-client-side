@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../hooks/axiosInstance';
 
-const demo = () => {
+const Demo = () => {
     const handleDate = (e) => {
         console.log(e.target.value);
     }
@@ -188,4 +188,4 @@ const demo = () => {
     );
 };
 
-export default demo;
+export default Demo;

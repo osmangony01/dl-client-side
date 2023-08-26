@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const D5 = () => {
+    
+
     return (
         <div className='flex justify-center items-center h-[500px] w-1/3'>
             <div class="flex flex-col ">
@@ -9,7 +11,10 @@ const D5 = () => {
                 </header>
                 <div class="flex-grow">
                     <main>
+
+                       
                         <div>
+                            
                             ADD MORE TEXT FOR THE SCROLL BAR TO APPEAR
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat quos dignissimos doloremque enim necessitatibus accusamus dolorum aperiam, at tempora vel?
                         </div>
@@ -20,6 +25,9 @@ const D5 = () => {
                         <div>
                             ADD MORE TEXT FOR THE SCROLL BAR TO APPEAR
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat quos dignissimos doloremque enim necessitatibus accusamus dolorum aperiam, at tempora vel?
+                        </div>
+                        <div>
+                       
                         </div>
                         <div>
                             ADD MORE TEXT FOR THE SCROLL BAR TO APPEAR
