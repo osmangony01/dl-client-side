@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
+import axiosInstance from '../../hooks/axiosInstance';
 
 const demo = () => {
     const handleDate = (e) => {
@@ -39,34 +40,33 @@ const demo = () => {
         setMaxPrice(e.target.value)
     }
 
-    console.log(placeType);
-    console.log(propertyType);
-    console.log(bedrooms);
-    console.log(beds);
-    console.log(bathrooms);
-    console.log(maxPrice);
-    console.log(minPrice);
-    console.log(maxPrice);
-
-    // const fetchReserveData = async () => {
-    //     const res = await axiosInstance.get('/api/getAllCategoryData')
-    //     const data = res.data;
-    //     if (data) {
-    //         setAllReserveData(data);
-    //     }
-    // }
-
-    useEffect(() => {
+    const fetchFilterResult = async () => {
+        
         const filter = {
-            "placeType:": propertyType,
+            "placeType": placeType,
             "bedrooms": bedrooms,
             "beds": beds,
             "bathrooms": bathrooms,
             "propertyType": propertyType,
             "price" : [minPrice, maxPrice],
         }
-        //fetchReserveData();
-        console.log(placeType, propertyType, bedrooms, beds, bathrooms, maxPrice, minPrice)
+        console.log(filter);
+
+        try {
+            const response = await axiosInstance.get("/api/getFilteredData", {
+                params: filter
+            });
+            const data = response.data;
+            console.log(response.data);
+            setFiltersData(data);
+        } catch (error) {
+            console.error('Error fetching specific category data:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchFilterResult();
+        
     },[placeType, propertyType, bedrooms, beds, bathrooms, maxPrice, minPrice])
 
     return (
@@ -161,13 +161,11 @@ const demo = () => {
 
                             <div className={propertyType === "Apartment" ? "text-center font-semibold mx-2 border-2 border-black rounded-md py-10" : "border  mx-2 text-center py-10 rounded-md"} onClick={() => { handlePropertyType("Apartment") }}><span>Apartment</span></div>
 
-                            <div className={propertyType === "Guesthouse" ? "text-center font-semibold mx-2 border-2 border-black rounded-md py-10" : "border  mx-2 text-center py-10 rounded-md"} onClick={() => { handlePropertyType("Guesthouse") }}><span>Guesthouse</span></div>
+                            <div className={propertyType === "Guesthouse" ? "text-center font-semibold mx-2 border-2 border-black rounded-md py-10 cursor-default" : "border cursor-pointer  mx-2 text-center py-10 rounded-md"} onClick={() => { handlePropertyType("Guesthouse") }}><span>Guesthouse</span></div>
 
                             <div className={propertyType === "Hotel" ? "text-center font-semibold mx-2 border-2 border-black rounded-md py-10" : "border  mx-2 text-center py-10 rounded-md"} onClick={() => { handlePropertyType("Hotel") }}><span>Hotel</span></div>
                         </div>
                     </div>
-
-
 
                     <div>
 
@@ -177,7 +175,7 @@ const demo = () => {
                 <div className='sticky bg-white bottom-0'>
                     <div className="flex justify-between items-center py-5 ">
                         <button className='text-black text-sm font-semibold '><u>Clear All</u></button>
-                        <button className="btn bg-slate-700 hover:bg-black rounded-md text-white font-semibold px-4 py-2">Show  places</button>
+                        <button className="btn bg-slate-700 hover:bg-black rounded-md text-white font-semibold px-4 py-2">Show  {filtersData.length} places</button>
                     </div>
                 </div>
             </div>
