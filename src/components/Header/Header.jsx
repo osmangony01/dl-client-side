@@ -6,15 +6,14 @@ import UserMenu from './UserMenu';
 import NavLogo from './NavLogo';
 import { ContextAPI } from '../../Layout';
 import axiosInstance from '../../hooks/axiosInstance';
+import { RxCross1 } from 'react-icons/rx';
 
 const Header = () => {
 
     const [searchResult, setSearchResult] = useContext(ContextAPI);
     const refOne = useRef(null);
-   // const [filterResult, setFilterResult] = useContext(ContextAPI)
+   
     const [showPopUPNav, setShowPopUPNav] = useState(false);
-
-    //const today = moment().format('YYYY-MM-DD');
 
 
     /* -------------------input field color handling------------------------*/
@@ -116,6 +115,14 @@ const Header = () => {
         setPets(pets + 1)
     }
 
+    const handleRemoveGuest = () => {
+        setGuest(0);
+        setChildren(0);
+        setAdults(0);
+        setInfants(0);
+        setPets(0);
+    }
+
     /*--------------------------- End ----------------------------------- */
 
 
@@ -142,7 +149,7 @@ const Header = () => {
     }
 
 
-    /* ------------------------Search data handling--------------------------- */
+    /* ------------------------ Search data handling--------------------------- */
 
     const fetchSearchResult = async (queryResult) => {
         try {
@@ -150,7 +157,7 @@ const Header = () => {
                 params: queryResult
             });
             const data = response.data;
-            console.log(data);
+            //console.log(data);
             setSearchResult(data);
         } catch (error) {
             console.error('Error fetching searching result :', error);
@@ -247,9 +254,10 @@ const Header = () => {
 
                                         <div className={`group relative text-gray-600 flex flex-row items-center  py-1 pl-6 pr-3 rounded-full ${fillGuest == true ? ' bg-white shadow-xl hover:bg-white' : 'hover:bg-[#ebeaea]'}`} onClick={handleFillGuestColor}>
 
-                                            <div className="flex flex-col  px-1">
-                                                <label className='text-sm font-semibold'>Who</label>
+                                            <div className="flex flex-col px-1">
+                                                <label className='text-sm font-semibold flex justify-between'>Who {guest>0 ? <span onClick={handleRemoveGuest} className='absolute top-[5px] right-[130px] hover:bg-slate-100 p-1.5 rounded-full'><RxCross1></RxCross1></span> : ''}</label>
                                                 <input type='text' value={`${guest > 0 ? guest + 'guest ' : ''}${infants > 0 ? ',' + infants + 'infants ' : ''} ${pets > 0 ? ', ' + pets + 'pets' : ""}`} name='who' placeholder='Add guests' className={`w-full  group-hover:bg-[#ebeaea] border-0 px-0 outline-0 placeholder:text-[15px] ${inputFill == false ? 'bg-white' : fillGuest == true ? 'bg-white group-hover:bg-white' : 'bg-[#ebeaea]  group-hover:bg-[#ebeaea]'}`} readOnly />
+                                               
                                             </div>
                                             {
                                                 guestPopUp && <div className="absolute right-0 top-16 z-10">

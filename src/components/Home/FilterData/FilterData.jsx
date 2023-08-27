@@ -6,7 +6,7 @@ import { RxCross1 } from "react-icons/rx";
 const FilterData = ({ status, handleFilterModal }) => {
 
     const [allReserveData, setAllReserveData] = useContext(ContextAPI);
-    // console.log(allReserveData);
+
     const [filtersData, setFiltersData] = useState([]);
     const [placeType, setPlaceType] = useState('any');
     const [propertyType, setPropertyType] = useState('House');
@@ -25,7 +25,7 @@ const FilterData = ({ status, handleFilterModal }) => {
     // const handleDate = (e) => {
     //     console.log(e.target.value);
     // }
-    
+
     const handlePlace = (label) => {
         setPlaceType(label);
     }
@@ -48,7 +48,7 @@ const FilterData = ({ status, handleFilterModal }) => {
     const handleMaxPrice = (e) => {
         setMaxPrice(e.target.value)
     }
-   
+
     const handleClear = () => {
         setPlaceType('any');
         setPropertyType('House');
@@ -59,8 +59,10 @@ const FilterData = ({ status, handleFilterModal }) => {
         setMaxPrice(990);
 
     }
-    const handleClose = () => {  handleFilterModal(false);}
+    const handleClose = () => { handleFilterModal(false); }
 
+
+    // search all data based on filtering
     const fetchFilterResult = async () => {
 
         const filter = {
@@ -98,28 +100,28 @@ const FilterData = ({ status, handleFilterModal }) => {
 
     return (
         <div>
-            {/* <div className='px-4 py-2 bg-blue-500 text-white w-[150px]' onClick={() => handleModel(true)}>Show Modal</div> */}
-
             {modal && <>
                 <div className='h-screen w-full fixed top-0 left-0 flex justify-center items-center bg-black bg-opacity-20 '>
                     <div className='relative bg-white rounded-lg shadow-lg w-11/12 md:w-10/12 lg:w-3/5 h-[85%] z-50'>
                         <div className='border-b px-6 py-5 sticky top-0 font-semibold flex justify-center'>
-                            Filters <span onClick={handleClose} className='absolute top-[20px] left-[30px]'><RxCross1></RxCross1></span>
+                            Filters <span onClick={handleClose} className='absolute top-[20px] left-[30px] hover:bg-slate-100 p-2 rounded-full'><RxCross1></RxCross1></span>
                         </div>
 
                         <main className='flex-grow overflow-y-scroll  px-6 py-5 max-h-[390px]'>
-                            <div className='p-5  '>
-                                <div >
-                                    <div className='text-[22px] font-semibold'>Type of place</div>
-                                    <div className='text-[15px] text-[#666565]'>Search rooms, entire homes, or any type of place.</div>
+                            <div className='p-5'>
+                                <div className='py-6'>
+                                    <div >
+                                        <div className='text-[22px] font-semibold'>Type of place</div>
+                                        <div className='text-[15px] text-[#666565]'>Search rooms, entire homes, or any type of place.</div>
+                                    </div>
+                                    <div className='grid grid-cols-3 px-6 py-6'>
+                                        <button className={placeType === "any" ? `text-white bg-[#2c2c2c] font-semibold text-base hover:bg-black text-center py-4 rounded-s-md` : "text-black bg-white border hover:border-black py-4 text-center rounded-s-md"} onClick={() => { handlePlace('any') }}>Any</button>
+                                        <button className={placeType === "room" ? `text-white bg-[#2c2c2c] font-semibold text-base hover:bg-black text-center py-4` : "text-black bg-white border hover:border-black py-4 text-center"} onClick={() => { handlePlace('room') }}>Room</button>
+                                        <button className={placeType === "entire room" ? `text-white bg-[#2c2c2c] font-semibold text-base hover:bg-black text-center py-4 rounded-e-md` : "text-black bg-white border hover:border-black py-4 text-center rounded-e-md"} onClick={() => { handlePlace('entire room') }}>Entire home</button>
+                                    </div>
                                 </div>
-                                <div className='grid grid-cols-3 px-6 py-6'>
-                                    <button className={placeType === "any" ? `text-white bg-[#2c2c2c] font-semibold text-base hover:bg-black text-center py-4 rounded-s-md` : "text-black bg-white border hover:border-black py-4 text-center rounded-s-md"} onClick={() => { handlePlace('any') }}>Any</button>
-                                    <button className={placeType === "room" ? `text-white bg-[#2c2c2c] font-semibold text-base hover:bg-black text-center py-4` : "text-black bg-white border hover:border-black py-4 text-center"} onClick={() => { handlePlace('room') }}>Room</button>
-                                    <button className={placeType === "entire room" ? `text-white bg-[#2c2c2c] font-semibold text-base hover:bg-black text-center py-4 rounded-e-md` : "text-black bg-white border hover:border-black py-4 text-center rounded-e-md"} onClick={() => { handlePlace('entire room') }}>Entire home</button>
-                                </div>
-
-                                <div>
+                                <hr />
+                                <div className='py-10'>
                                     <div className='text-[22px] font-semibold'> Price range</div>
                                     <div className='text-[15px] text-[#666565]'> Nightly prices before fees and taxes</div>
 
@@ -140,15 +142,14 @@ const FilterData = ({ status, handleFilterModal }) => {
                                         </div>
                                     </div>
                                 </div>
-
-                                <div className='py-4'>
+                                <hr />
+                                <div className='py-5'>
                                     <div className='text-[22px] font-semibold pb-2'>Rooms and beds</div>
                                     <div>
                                         <div className='py-3'>Bedrooms</div>
                                         <div>
                                             <div className='py-5'>
                                                 <span className={bedrooms == 0 ? "text-[15px] p-4 bg-black text-white rounded-full " : "border p-4 text-black border-1 text-[15px] hover:border-black  rounded-full"} onClick={() => { handleBedrooms(0) }}>Any</span>
-
                                                 {
                                                     [...Array(8)].map((_, i) => {
                                                         return (<span key={i} className={bedrooms == i + 1 ? "text-[15px] py-3 px-4 bg-black text-white rounded-full mx-2 " : "border py-3 px-4 text-black border-1 text-[15px] hover:border-black  rounded-full mx-2"} onClick={() => { handleBedrooms(i + 1) }}>{i == 7 ? `${i + 1} +` : i + 1}</span>);
@@ -161,7 +162,6 @@ const FilterData = ({ status, handleFilterModal }) => {
                                         <div className='py-3'>Beds</div>
                                         <div className='py-5'>
                                             <span className={beds == 0 ? "text-[15px] p-4 bg-black text-white rounded-full " : "border p-4 text-black border-1 text-[15px] hover:border-black  rounded-full"} onClick={() => { handleBeds(0) }}>Any</span>
-
                                             {
                                                 [...Array(8)].map((_, i) => {
                                                     return (<span key={i} className={beds == i + 1 ? "text-[15px] py-3 px-4 bg-black text-white rounded-full mx-2 " : "border py-3 px-4 text-black border-1 text-[15px] hover:border-black  rounded-full mx-2"} onClick={() => { handleBeds(i + 1) }}>{i == 7 ? `${i + 1} +` : i + 1}</span>);
@@ -174,7 +174,6 @@ const FilterData = ({ status, handleFilterModal }) => {
                                         <div>
                                             <div className='py-5'>
                                                 <span className={bathrooms == 0 ? "text-[15px] p-4 bg-black text-white rounded-full " : "border p-4 text-black border-1 text-[15px] hover:border-black  rounded-full"} onClick={() => { handleBathrooms(0) }}>Any</span>
-
                                                 {
                                                     [...Array(8)].map((_, i) => {
                                                         return (<span key={i} className={bathrooms == i + 1 ? "text-[15px] py-3 px-4 bg-black text-white rounded-full mx-2 " : "border py-3 px-4 text-black border-1 text-[15px] hover:border-black  rounded-full mx-2"} onClick={() => { handleBathrooms(i + 1) }}>{i == 7 ? `${i + 1} +` : i + 1}</span>);
@@ -185,7 +184,7 @@ const FilterData = ({ status, handleFilterModal }) => {
                                     </div>
                                 </div>
                                 <hr />
-                                <div>
+                                <div className='py-5'>
                                     <div className='text-[22px] font-semibold pt-4'>Property type</div>
                                     <div className='grid grid-cols-4 px-6 py-6'>
                                         <div className={propertyType === "House" ? "text-center font-semibold mx-2 border-2 border-black rounded-md py-10" : "border  mx-2 text-center py-10 rounded-md"} onClick={() => { handlePropertyType("House") }}><span>House</span></div>
@@ -197,28 +196,19 @@ const FilterData = ({ status, handleFilterModal }) => {
                                         <div className={propertyType === "Hotel" ? "text-center font-semibold mx-2 border-2 border-black rounded-md py-10" : "border  mx-2 text-center py-10 rounded-md"} onClick={() => { handlePropertyType("Hotel") }}><span>Hotel</span></div>
                                     </div>
                                 </div>
-
                                 <div>
-
                                 </div>
                             </div>
                         </main>
 
                         <div className='py-3 border-t absolute   left-0 right-0 bottom-0  flex justify-between px-6 overflow-hidden'>
-                            {/* <button className='' onClick={handleClear}>Clear All</button>
-                            <button className='' onClick={handleModel}>close</button> */}
-                            
-                                <button onClick={handleClear} className='text-slate-700 text-base font-semibold '><u>Clear All</u></button>
-                                <button onClick={handleFilter} className="btn bg-slate-700 hover:bg-black rounded-md text-white font-semibold px-4 py-2">Show  {filtersData.length} places</button>
-                          
+                            <button onClick={handleClear} className='text-slate-700 text-base font-semibold hover:text-black'><u>Clear All</u></button>
+                            <button onClick={handleFilter} className="btn bg-slate-700 hover:bg-black rounded-md text-white font-semibold px-4 py-2">Show  {filtersData.length} places</button>
                         </div>
-
                     </div>
                 </div>
             </>
             }
-
-
         </div>
     );
 };
