@@ -1,6 +1,6 @@
 import React from 'react';
-import NavLogo from '../Navbar/NavLogo';
-import UserMenu from '../Navbar/UserMenu';
+import NavLogo from '../NavLogo';
+import UserMenu from '../UserMenu';
 import PopUpSearchMenu from './PopUpSearchMenu';
 
 const PopUpNavbar = () => {

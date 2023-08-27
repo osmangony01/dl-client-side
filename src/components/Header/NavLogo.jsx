@@ -1,6 +1,6 @@
 
-import logo2 from '../../../../public/logo/logo2.png'
-import logo from '../../../../public/logo/logo.png'
+import logo2 from '../../../public/logo/logo2.png'
+import logo from '../../../public/logo/logo.png'
 import { Link } from 'react-router-dom';
 
 

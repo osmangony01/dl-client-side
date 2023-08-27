@@ -1,6 +1,6 @@
 
 import { AiOutlineMenu } from "react-icons/ai";
-import avatar from "../../../../public/images/placeholder.jpg";
+import avatar from "../../../public/images/placeholder.jpg";
 
 const UserMenu = () => {
     return (
